@@ -1,0 +1,61 @@
+{% extends 'Hotel/base.html' %} {%load static %}{% block content %}
+<form method="get">
+  <div class="well">
+    <h4 style="margin-top: 0;">Filter</h4>
+    <div class="row">
+      <div class="form-group col-sm-8 col-md-6">
+        {{ filter.form.town.label_tag }}
+        <div>
+          {% for choice in filter.form.town %}
+          <label class="checkbox-inline">
+            {{ choice.tag }} {{ choice.choice_label }}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.vegprice.label_tag }} {{ filter.form.vegprice }}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.maxcap.label_tag }} {{filter.form.maxcap}}
+      </div>
+
+      <div class="form-group col-sm-8 col-md-6">
+        {{ filter.form.venue.label_tag }}
+        <div>
+          {% for choice in filter.form.venue %}
+          <label class="checkbox-inline">
+            {{ choice.tag }} {{ choice.choice_label }}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">
+      <span class="glyphicon glyphicon-search"></span> Search
+    </button>
+  </div>
+</form>
+
+{% for user in filter.qs %}
+<div class="card" style="width: 18rem;">
+  <img
+    class="card-img-top"
+    src="{% static 'images/pic.jpg' %}"
+    alt="Card image cap"
+  />
+  <div class="card-body">
+    <h5 class="card-title">{{user.vedorname}}</h5>
+    <p class="card-text">
+      {% for group in user.town.all %} {{ group }} {% empty %}
+      <em class="text-muted">No group</em>
+      {% endfor %}
+    </p>
+    <p class="card-text">
+      {% for group in user.venue.all %} {{ group }} {% empty %}
+      <em class="text-muted">No group</em>
+      {% endfor %}
+    </p>
+  </div>
+</div>
+{% endfor %} {% endblock %}
